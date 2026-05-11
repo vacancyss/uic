@@ -1702,13 +1702,17 @@
             ZIndex = 10,
         })
         
-        items["outline"] = library:create("Frame", {
+        items["outline"] = library:create("ScrollingFrame", {
             Parent = items["dropdown_holder"],
             Size = dim2(1, 0, 1, 0),
             ClipsDescendants = true,
             BorderSizePixel = 0,
             BackgroundColor3 = rgb(33, 33, 35),
             ZIndex = 10,
+            ScrollBarThickness = 2,
+            ScrollBarImageColor3 = rgb(44, 44, 46),
+            CanvasSize = dim2(0, 0, 0, 0),
+            AutomaticCanvasSize = Enum.AutomaticSize.Y,
         })
         
         library:create("UIPadding", {
@@ -1755,7 +1759,7 @@
         end
         
         function cfg.set_visible(bool)
-            local a = bool and cfg.y_size or 0
+            local a = bool and math.min(cfg.y_size, 150) or 0
             library:tween(items["dropdown_holder"], {Size = dim_offset(items["dropdown"].AbsoluteSize.X, a)})
             items["dropdown_holder"].Position = dim2(0, items["dropdown"].AbsolutePosition.X, 0, items["dropdown"].AbsolutePosition.Y + 80)
             library:close_element(cfg)
@@ -2697,17 +2701,14 @@
 
         local items = cfg.items
         
-        items["outline"] = library:create("ScrollingFrame", {
+        items["outline"] = library:create("Frame", {
+            Visible = true,
             Parent = library["items"],
             Size = dim2(0, 0, 0, 0),
             ClipsDescendants = true,
             BorderSizePixel = 0,
-            AutomaticSize = Enum.AutomaticSize.None,
-            BackgroundColor3 = rgb(33, 33, 35),
-            ScrollBarThickness = 2,
-            ScrollBarImageColor3 = rgb(44, 44, 46),
-            CanvasSize = dim2(0, 0, 0, 0),
-            AutomaticCanvasSize = Enum.AutomaticSize.Y,
+            AutomaticSize = Enum.AutomaticSize.Y,
+            BackgroundColor3 = rgb(25, 25, 29)
         })
         
         items["inline"] = library:create("Frame", {
@@ -2758,9 +2759,8 @@
             ImageColor3 = rgb(150, 150, 150),
         })
 
-        function cfg.set_visible(bool)
-            local size = bool and dim_offset(240, 150) or dim_offset(0, 0)
-            library:tween(items["outline"], {Size = size})
+        function cfg.set_visible(bool)                 
+            library:tween(items["outline"], {Size = dim_offset(bool and 240 or 0, 0)})
             items["outline"].Position = dim_offset(items["tick"].AbsolutePosition.X, items["tick"].AbsolutePosition.Y + 90)
             library:close_element(cfg)
         end
