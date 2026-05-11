@@ -1761,8 +1761,9 @@
         
         function cfg.set_visible(bool)
             local a = bool and math.min(cfg.y_size, 150) or 0
+            items["dropdown_holder"].Size = dim_offset(items["dropdown"].AbsoluteSize.X, 0)
+            items["dropdown_holder"].Position = dim2(0, items["dropdown"].AbsolutePosition.X, 0, items["dropdown"].AbsolutePosition.Y + items["dropdown"].AbsoluteSize.Y + 5)
             library:tween(items["dropdown_holder"], {Size = dim_offset(items["dropdown"].AbsoluteSize.X, a)})
-            items["dropdown_holder"].Position = dim2(0, items["dropdown"].AbsolutePosition.X, 0, items["dropdown"].AbsolutePosition.Y + 80)
             library:close_element(cfg)
         end
         
