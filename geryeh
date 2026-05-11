@@ -1700,6 +1700,7 @@
             Size = dim2(0, 0, 0, 0),
             BorderSizePixel = 0,
             ZIndex = 10,
+            ClipsDescendants = true,
         })
         
         items["outline"] = library:create("ScrollingFrame", {
